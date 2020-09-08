@@ -8,9 +8,9 @@ class MyApp extends StatelessWidget {
     return new MaterialApp(
       title: 'Things to do',
       theme: new ThemeData(
-        primarySwatch: Colors.green,
+        primarySwatch: Colors.blueGrey,
       ),
-      home: new MyHomePage(title: 'Things to do',),
+      home: new MyHomePage(title: '',),
     );
   }
 }
@@ -46,16 +46,16 @@ class _MyHomePageState extends State<MyHomePage> {
         child: new Column(
           children: [new Container(
           
-          height: Theme.of(context).textTheme.headline4.fontSize * 1.1 + 15.0,
+          height: Theme.of(context).textTheme.headline4.fontSize * 1.2 + 15.0,
           width: 400.0,
-          margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+          margin: const EdgeInsets.fromLTRB(0, 15, 0, 10),
           
           decoration: BoxDecoration(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(15.0),
               topRight: Radius.circular(15.0),
               bottomLeft: Radius.circular(0.0),
-              bottomRight: Radius.circular(0.0),
+              bottomRight: Radius.circular(15.0),
             ),
             gradient: LinearGradient(
               begin: Alignment.topLeft,
@@ -67,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           boxShadow: [
             BoxShadow(
-              color: Colors.white,
+              color: Colors.black,
               blurRadius: 10.0,
               offset: Offset(0.0, 0.0),
               
@@ -76,11 +76,12 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           padding: const EdgeInsets.all(8.0),
             child: Text(
-              'Motivational Quote Here:',
+              'Things to do:',
               style: Theme.of(context)
         .textTheme
         .headline4
-        .copyWith(color: Colors.white))
+        .copyWith(color: Colors.white),
+        textAlign: TextAlign.center,)
         
             ),
             new Column(
@@ -88,14 +89,14 @@ class _MyHomePageState extends State<MyHomePage> {
           
           height: Theme.of(context).textTheme.headline4.fontSize * 1.0 + 0.2,
           width: 300.0,
-          margin: const EdgeInsets.fromLTRB(0, 0, 0, 30),
+          margin: const EdgeInsets.fromLTRB(0, 10, 0, 30),
           
           decoration: BoxDecoration(
             borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(0.0),
-              topRight: Radius.circular(0.0),
+              topLeft: Radius.circular(15.0),
+              topRight: Radius.circular(15.0),
               bottomLeft: Radius.circular(15.0),
-              bottomRight: Radius.circular(15.0),
+              bottomRight: Radius.circular(0.0),
             ),
             gradient: LinearGradient(
               begin: Alignment.topLeft,
@@ -107,8 +108,8 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           boxShadow: [
             BoxShadow(
-              color: Colors.white,
-              blurRadius: 10.0,
+              color: Colors.black,
+              blurRadius: 5.0,
               offset: Offset(0.0, 0.0),
               
             ),
@@ -116,7 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           padding: const EdgeInsets.all(8.0),
             child: Text(
-              '"Whoever said the motivational quote."',
+              '"Motivational quote." - Jordan Reader',
               style:TextStyle(
                 fontSize: 15,
                 fontStyle: FontStyle.italic,
@@ -152,10 +153,28 @@ class __TasksState extends State<_Tasks>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
 
+  var completeTextOne = "Unfinished";
+  var completeTextTwo = "Unfinished";
+  var completeTextThree = "Unfinished";
+  
+
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(vsync: this);
+  }
+
+  String completedTaskOne() {
+    completeTextOne = "Well done!";
+    return completeTextOne;
+  }
+   String completedTaskTwo() {
+    completeTextTwo = "Well done!";
+    return completeTextTwo;
+  }
+   String completedTaskThree() {
+    completeTextThree = "Well done!";
+    return completeTextThree;
   }
 
   @override
@@ -163,7 +182,9 @@ class __TasksState extends State<_Tasks>
     super.dispose();
     _controller.dispose();
   }
-
+  final _taskOne = GlobalKey<FormState>();
+  final _taskTwo = GlobalKey<FormState>();
+  final _taskThree = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -177,20 +198,91 @@ class __TasksState extends State<_Tasks>
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
-        
-       
         Divider(),
-        Text("Task one", style: TextStyle(fontSize:19.0, fontWeight: FontWeight.bold),),
+        Form(
+        key: _taskOne,
+          child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          TextFormField(
+            decoration: const InputDecoration(
+              hintText: 'Enter a task',
+            ),
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Please enter some text';
+              }
+              return null;
+            },
+          ),
+        ]
+          )
+        ),
+        new RaisedButton(
+                    padding: const EdgeInsets.all(8.0),
+                    textColor: Colors.white,
+                    color: Colors.blueGrey[500],
+                    onPressed: completedTaskOne,
+                    child: Text(completeTextOne),
+                  ),
         Divider(),
-        Divider(),
-        Text("Task two", style: TextStyle(fontSize:19.0, fontWeight: FontWeight.bold),),
-        Divider(),
-        Divider(),
-        Text("Task three", style: TextStyle(fontSize:19.0, fontWeight: FontWeight.bold),),
-        Divider(),
-      ],
+        Form(
+        key: _taskTwo,
+          child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          TextFormField(
+            decoration: const InputDecoration(
+              hintText: 'Enter a task',
+            ),
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Please enter some text';
+              }
+              return null;
+            },
+          ),
+        ]
+          )
+        ),
+      
+        new RaisedButton(
+                    padding: const EdgeInsets.all(8.0),
+                    textColor: Colors.white,
+                    color: Colors.blueGrey[500],
+                    onPressed: completedTaskTwo, 
+                    child: Text(completeTextTwo),
+                  ),
+      Divider(),
+        Form(
+        key: _taskThree,
+          child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          TextFormField(
+            decoration: const InputDecoration(
+              hintText: 'Enter a task',
+            ),
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Please enter some text';
+              }
+              return null;
+            },
+          ),
+        ]
+          )
+        ),
+        new RaisedButton(
+                    padding: const EdgeInsets.all(8.0),
+                    textColor: Colors.white,
+                    color: Colors.blueGrey[500],
+                    onPressed: completedTaskThree, 
+                    child: Text(completeTextThree),
+                  ),
+      ]
       ),
-  
+        
     );
   }
 }
